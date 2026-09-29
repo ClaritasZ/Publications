@@ -8,11 +8,20 @@ Weekly reports are found by path and file name:
   reports/the-<architect>/eu/YYYY/<Name>_YY_WW.pdf    European weekly edition
   reports/european-architecture-review/YYYY/<Name>_YY_MM.pdf    monthly theme issue
 reports/sample/ is kept as published and not listed here.
+
+The central observation and the week's signals are read from the published
+PDFs themselves, so the site never says anything the report does not.
 """
 
+import functools
 import html
 import pathlib
 import re
+
+try:  # Reading the reports is optional: without pypdf the tiles show their fixed text.
+    import pypdf
+except BaseException:  # also a broken crypto backend, which raises outside Exception
+    pypdf = None
 
 ROOT = pathlib.Path(__file__).parent
 BRAND = "https://claritasz.com"
@@ -129,6 +138,31 @@ def month(lang, issue):
     return f"{MONTHS[lang][int(issue[1]) - 1]} 20{issue[0]}"
 
 
+OBSERVATION = re.compile(r"^(CENTRALE OBSERVATIE|CENTRAL OBSERVATION)$")
+SELECTION = re.compile(r"^(WEEKSELECTIE|WEEKLY SELECTION|SELECTION)$")
+
+
+@functools.lru_cache(maxsize=None)
+def read_report(url):
+    """Return (observation, [(signal, source), ...]) from a report PDF, or (None, [])."""
+    if pypdf is None:
+        return None, []
+    try:
+        lines = [l.strip() for l in pypdf.PdfReader(ROOT / url.lstrip("/")).pages[0].extract_text().splitlines()]
+    except Exception:
+        return None, []
+    observation, signals = [], []
+    for i, line in enumerate(lines):
+        if OBSERVATION.match(line):
+            for nxt in lines[i + 1:]:
+                if SELECTION.match(nxt):
+                    break
+                observation.append(nxt)
+        if re.fullmatch(r"[1-9]", line) and i + 2 < len(lines) and " · " in lines[i + 2]:
+            signals.append((lines[i + 1], lines[i + 2]))
+    return (" ".join(observation) or None), signals
+
+
 def label(edition):
     return f"{edition[0]}-{edition[1]}"
 
@@ -137,13 +171,15 @@ def e(text):
     return html.escape(text, quote=True)
 
 
-def tile(href, title, text="", where="", cls="tile", status=""):
+def tile(href, title, text="", where="", cls="tile", status="", extra=""):
     parts = [f'        <a class="{cls}" href="{e(href)}">']
     if status:
         parts.append(f'          <span class="status status--live">{e(status)}</span>')
     parts.append(f"          <h3>{e(title)}</h3>")
     if text:
         parts.append(f"          <p>{e(text)}</p>")
+    if extra:
+        parts.append(extra)
     if where:
         parts.append(f'          <p class="where">{e(where)}</p>')
     parts.append("        </a>")
@@ -229,7 +265,7 @@ def edition_page(lang, kind, editions):
         main = section(t["latest"], f'      <p class="note">{e(t["none"])}</p>')
     else:
         (latest, files), *earlier = editions.items()
-        items = [tile(files[p], names[p], where=f"PDF · {label(latest)}", cls="tile tile--domain")
+        items = [tile(files[p], names[p], read_report(files[p])[0] or "", f"PDF · {label(latest)}", cls="tile tile--domain")
                  for p in PERSPECTIVES if p in files]
         main = section(f'{t["edition"]} {label(latest)}', tiles(items))
         if earlier:
@@ -259,6 +295,20 @@ def review_page(lang, issues):
     return page(lang, "reports/review/", t["review_title"], t["review_lead"], main, back=f"/{lang}/")
 
 
+def signal_list(editions):
+    """The latest edition's signals, read from its first readable report."""
+    if not editions:
+        return ""
+    files = next(iter(editions.values()))
+    for p in PERSPECTIVES:
+        if p in files:
+            signals = read_report(files[p])[1]
+            if signals:
+                items = "\n".join(f"            <li>{e(title)}</li>" for title, _ in signals)
+                return f'          <ul class="signals">\n{items}\n          </ul>'
+    return ""
+
+
 def index_page(lang, all_editions, issues):
     t = TEXT[lang]
     reports = []
@@ -266,7 +316,7 @@ def index_page(lang, all_editions, issues):
         editions = all_editions[kind]
         where = f'{t[f"{kind}_when"]} · {t["edition"]} {label(next(iter(editions)))}' if editions else t["none"]
         reports.append(tile(f"/{lang}/reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], where,
-                            cls="tile tile--domain", status=t["weekly"]))
+                            cls="tile tile--domain", status=t["weekly"], extra=signal_list(editions)))
     where = f'{t["review_when"]} · {month(lang, next(iter(issues)))}' if issues else t["review_none"]
     reports.append(tile(f"/{lang}/reports/review/", t["review_title"], t["review_lead"], where,
                         cls="tile tile--domain", status=t["monthly"]))
