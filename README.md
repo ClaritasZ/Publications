@@ -72,9 +72,12 @@ Colour supports recognition. The editorial system remains consistent across ever
 de-[architect]/YYYY/
 the-[architect]/eu/YYYY/
 european-architecture-review/YYYY/
+sample/
 ```
 
 Weekly filenames use `YY_WW`. Monthly theme issues use `YY_MM`. Published editions are never overwritten.
+
+`sample/` holds early and example editions that precede the current structure or naming convention. They are kept as they were published.
 
 ## Editorial model
 
