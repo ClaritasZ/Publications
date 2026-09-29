@@ -49,7 +49,7 @@ This is a separate European selection, not a translation of the Dutch edition.
 
 A monthly English theme issue looking back at the most consequential European architecture theme of the month.
 
-The review contains an editorial, one A4 page for each architecture perspective, a cross architecture synthesis and primary sources. The first issue covers October 2026.
+The review interleaves six A4 architecture perspectives with five in depth developments and closes with an editorial on their interactions. The first issue covers September 2026.
 
 ### Architecture perspectives
 
@@ -78,6 +78,10 @@ Colour supports recognition. The editorial system remains consistent across ever
 #### European reports
 
 - [The Infrastructure Architect · European Edition 26-09](./reports/sample/the-infrastructure-architect/eu/2026/The_Infrastructure_Architect_26_09.pdf)
+
+#### European Architecture Review · 26-09
+
+- [September 2026 · European Architecture Review](./reports/european-architecture-review/2026/European_Architecture_Review_26_09.pdf)
 
 ### How to publish
 
