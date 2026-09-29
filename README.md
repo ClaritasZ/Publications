@@ -1,12 +1,13 @@
 # ClaritasZ Publications
 
-Everything ClaritasZ publishes, in one place: reports, essays and papers.
+Everything ClaritasZ publishes, in one place: reports, essays, papers and AI prompts.
 
 | Kind | Folder |
 |---|---|
 | Reports | [`reports/`](./reports/) |
 | Essays | [`essays/`](./essays/) |
 | Papers | [`papers/`](./papers/) |
+| AI prompts | [`prompts/`](./prompts/) |
 
 Published files are never overwritten. A new version is added next to the previous one.
 
@@ -111,6 +112,14 @@ Methodical and substantiated, with a structure or model as the result.
 
 - [The Governance Chain](./papers/the-governance-chain.pdf) · Source → policy → principle → framework → guideline → measure. How decisions flow through an organisation.
 - [Explicit Grounds](./papers/explicit-grounds.pdf) · Architecture practice in complex, changing environments.
+
+## AI prompts
+
+Freeware prompts and scripts for AI assistants, readable as text and usable as a tool. Each prompt states what it does, what it does not do and which assistant it was written for.
+
+| Prompt | Assistant | Version | Date |
+|---|---|---|---|
+| to be added | Copilot | 1.0 | |
 
 **ClaritasZ**  
 Consistent in Design. Powered by Logic.
