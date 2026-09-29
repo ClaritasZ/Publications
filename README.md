@@ -112,6 +112,7 @@ Methodical and substantiated, with a structure or model as the result.
 
 - [The Governance Chain](./papers/the-governance-chain.pdf) · Source → policy → principle → framework → guideline → measure. How decisions flow through an organisation.
 - [Explicit Grounds](./papers/explicit-grounds.pdf) · Architecture practice in complex, changing environments.
+- [Provenance Framework v1.0](./papers/provenance-framework-v1.0.zip) · A way of making architecture decisions traceable. Amendments capture what a document says; architecture decision records establish which observations are intentional decisions; documents are derived from both. ZIP with the complete documentation (`claritasz-complete-documentation.pdf`) and the database schema (`schema.pdf`). Free to use; support in Dutch or English at €200 per hour, excluding VAT.
 
 ## AI prompts
 
