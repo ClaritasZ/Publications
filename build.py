@@ -58,7 +58,7 @@ TEXT = {
         "paper_chain": "Bron, beleid, principe, kader, richtlijn, maatregel. Hoe besluiten door een organisatie stromen.",
         "paper_grounds": "Architectuurpraktijk in complexe, veranderende omgevingen.",
         "prompt_provenance": "Voor Copilot. Maakt architectuurbesluiten herleidbaar: documentatie en databaseschema. Vrij te gebruiken.",
-        "source": "Bron op GitHub",
+        "source": "Bron op GitHub", "back": "Terug",
     },
     "en": {
         "locale": "en_GB", "lang_label": "Language",
@@ -74,7 +74,7 @@ TEXT = {
         "paper_chain": "Source, policy, principle, framework, guideline, measure. How decisions flow through an organisation.",
         "paper_grounds": "Architecture practice in complex, changing environments.",
         "prompt_provenance": "For Copilot. Makes architecture decisions traceable: documentation and database schema. Free to use.",
-        "source": "Source on GitHub",
+        "source": "Source on GitHub", "back": "Back",
     },
 }
 
@@ -129,13 +129,13 @@ def tiles(items):
     return '      <div class="tiles">\n' + "\n".join(items) + "\n      </div>"
 
 
-def page(lang, path, title, lead, main, crumb=""):
+def page(lang, path, title, lead, main, back):
     t = TEXT[lang]
     other = "en" if lang == "nl" else "nl"
     here = f'<span aria-current="true" lang="{lang}">{lang.upper()}</span>'
     there = f'<a href="/{other}/{path}" hreflang="{other}" lang="{other}">{other.upper()}</a>'
     nav = f"{here}\n        {there}" if lang == "nl" else f"{there}\n        {here}"
-    crumb_html = f'\n    <p class="crumb"><a href="/{lang}/">{e(t["title"])}</a></p>' if crumb else ""
+    crumb_html = f'\n    <p class="crumb"><a href="{back}">{e(t["back"])}</a></p>'
     full = f"ClaritasZ · {title}"
     url = f"https://publications.claritasz.com/{lang}/{path}"
     return f"""<!DOCTYPE html>
@@ -206,7 +206,7 @@ def edition_page(lang, kind, editions):
                                    for p in PERSPECTIVES if p in files)
                 rows.append(f'        <li><span class="edition">{label(edition)}</span> {links}</li>')
             main += "\n" + section(t["earlier"], '      <ul class="editions">\n' + "\n".join(rows) + "\n      </ul>")
-    return page(lang, f"reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], main, crumb=True)
+    return page(lang, f"reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], main, back=f"/{lang}/")
 
 
 def index_page(lang, all_editions):
@@ -226,7 +226,7 @@ def index_page(lang, all_editions):
         section(t["prompts"], tiles([tile("/prompts/provenance-framework-v1.0.zip", "Provenance Framework",
                                           t["prompt_provenance"], "ZIP · 1.0")]), "prompts"),
     ])
-    return page(lang, "", t["title"], t["lead"], main)
+    return page(lang, "", t["title"], t["lead"], main, back=f"{BRAND}/{lang}/")
 
 
 def write(rel, content):
