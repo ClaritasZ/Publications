@@ -1,0 +1,37 @@
+# publications.claritasz.com · Netlify configuration
+# Reports moved from the root into reports/. Old paths keep working.
+
+[[redirects]]
+  from = "/de-businessarchitect/*"
+  to = "/reports/de-businessarchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de-dataarchitect/*"
+  to = "/reports/de-dataarchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de-enterprisearchitect/*"
+  to = "/reports/de-enterprisearchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de-infrastructuurarchitect/*"
+  to = "/reports/de-infrastructuurarchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de-integratiearchitect/*"
+  to = "/reports/de-integratiearchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/de-securityarchitect/*"
+  to = "/reports/de-securityarchitect/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/sample/*"
+  to = "/reports/sample/:splat"
+  status = 301
