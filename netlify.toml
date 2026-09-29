@@ -1,4 +1,9 @@
 # publications.claritasz.com · Netlify configuration
+
+# The pages are built from the folders on every push (see build.py).
+[build]
+  command = "python3 build.py"
+  publish = "."
 # Reports moved from the root into reports/. Old paths keep working.
 
 [[redirects]]
@@ -35,3 +40,17 @@
   from = "/sample/*"
   to = "/reports/sample/:splat"
   status = 301
+
+# The root has no page of its own: Dutch browsers go to /nl/, everyone else to /en/.
+[[redirects]]
+  from = "/"
+  to = "/nl/"
+  status = 302
+  force = true
+  conditions = {Language = ["nl"]}
+
+[[redirects]]
+  from = "/"
+  to = "/en/"
+  status = 302
+  force = true
