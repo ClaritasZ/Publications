@@ -1,12 +1,24 @@
-# ClaritasZ Reports
+# ClaritasZ Publications
+
+Everything ClaritasZ publishes, in one place: reports, essays and papers.
+
+| Kind | Folder |
+|---|---|
+| Reports | [`reports/`](./reports/) |
+| Essays | [`essays/`](./essays/) |
+| Papers | [`papers/`](./papers/) |
+
+Published files are never overwritten. A new version is added next to the previous one.
+
+## Reports
 
 Concise architecture reports that translate consequential developments into role specific decision impact.
 
 Each edition separates confirmed fact, architecture interpretation, sector impact and the decisions that may need to be reconsidered.
 
-## Publication rhythm
+### Publication rhythm
 
-### Tuesday · Nederlandse weekeditie
+#### Tuesday · Nederlandse weekeditie
 
 Six Dutch one page reports based on one shared factual ground:
 
@@ -19,7 +31,7 @@ Six Dutch one page reports based on one shared factual ground:
 
 The Dutch edition focuses on developments with material impact in the Netherlands.
 
-### Thursday · European weekly edition
+#### Thursday · European weekly edition
 
 Six English one page reports covering the same architecture perspectives from a European context:
 
@@ -32,13 +44,13 @@ Six English one page reports covering the same architecture perspectives from a 
 
 This is a separate European selection, not a translation of the Dutch edition.
 
-### Last Friday · European Architecture Review
+#### Last Friday · European Architecture Review
 
 A monthly English theme issue looking back at the most consequential European architecture theme of the month.
 
 The review contains an editorial, one A4 page for each architecture perspective, a cross architecture synthesis and primary sources. The first issue covers October 2026.
 
-## Architecture perspectives
+### Architecture perspectives
 
 | Perspective | Accent |
 |---|---|
@@ -51,39 +63,54 @@ The review contains an editorial, one A4 page for each architecture perspective,
 
 Colour supports recognition. The editorial system remains consistent across every report.
 
-## Latest published editions
+### Latest published editions
 
-### Nederlandse reports · editie 26-40
+#### Nederlandse reports · editie 26-40
 
-- [De Enterprisearchitect](./de-enterprisearchitect/2026/De_Enterprisearchitect_26_40.pdf)
-- [De Businessarchitect](./de-businessarchitect/2026/De_Businessarchitect_26_40.pdf)
-- [De Dataarchitect](./de-dataarchitect/2026/De_Dataarchitect_26_40.pdf)
-- [De Integratiearchitect](./de-integratiearchitect/2026/De_Integratiearchitect_26_40.pdf)
-- [De Securityarchitect](./de-securityarchitect/2026/De_Securityarchitect_26_40.pdf)
-- [De Infrastructuurarchitect](./de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_26_40.pdf)
+- [De Enterprisearchitect](./reports/de-enterprisearchitect/2026/De_Enterprisearchitect_26_40.pdf)
+- [De Businessarchitect](./reports/de-businessarchitect/2026/De_Businessarchitect_26_40.pdf)
+- [De Dataarchitect](./reports/de-dataarchitect/2026/De_Dataarchitect_26_40.pdf)
+- [De Integratiearchitect](./reports/de-integratiearchitect/2026/De_Integratiearchitect_26_40.pdf)
+- [De Securityarchitect](./reports/de-securityarchitect/2026/De_Securityarchitect_26_40.pdf)
+- [De Infrastructuurarchitect](./reports/de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_26_40.pdf)
 
-### European reports
+#### European reports
 
-- [The Infrastructure Architect · European Edition 26-09](./sample/the-infrastructure-architect/eu/2026/The_Infrastructure_Architect_26_09.pdf)
+- [The Infrastructure Architect · European Edition 26-09](./reports/sample/the-infrastructure-architect/eu/2026/The_Infrastructure_Architect_26_09.pdf)
 
-## Repository structure
+### Repository structure
 
 ```text
-de-[architect]/YYYY/
-the-[architect]/eu/YYYY/
-european-architecture-review/YYYY/
-sample/
+reports/de-[architect]/YYYY/
+reports/the-[architect]/eu/YYYY/
+reports/european-architecture-review/YYYY/
+reports/sample/
 ```
 
 Weekly filenames use `YY_WW`. Monthly theme issues use `YY_MM`. Published editions are never overwritten.
 
-`sample/` holds early and example editions that precede the current structure or naming convention. They are kept as they were published.
+`reports/sample/` holds early and example editions that precede the current structure or naming convention. They are kept as they were published.
 
-## Editorial model
+### Editorial model
 
 One shared factual ground is interpreted from multiple architecture responsibilities. Facts remain consistent while the impact, dependencies and decision relevance differ by perspective.
 
 Only material developments from authoritative primary sources are selected. The reports are organisation independent and written for readers who need a clear view without a product inventory or solution design.
+
+## Essays
+
+A reflection or argument, developing a single thought.
+
+| Essay | Version | Date |
+|---|---|---|
+| Ambiguity Is the Attack Surface | 1.0 | September 2026 |
+
+## Papers
+
+Methodical and substantiated, with a structure or model as the result.
+
+- [The Governance Chain](./papers/the-governance-chain.pdf) · Source → policy → principle → framework → guideline → measure. How decisions flow through an organisation.
+- [Explicit Grounds](./papers/explicit-grounds.pdf) · Architecture practice in complex, changing environments.
 
 **ClaritasZ**  
 Consistent in Design. Powered by Logic.
