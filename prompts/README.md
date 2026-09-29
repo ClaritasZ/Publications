@@ -4,4 +4,4 @@ Freeware prompts and scripts for AI assistants. Free to use; the text itself sho
 
 | Prompt | Assistant | Version | Date | File |
 |---|---|---|---|---|
-| to be added | Copilot | 1.0 | | to be added |
+| Provenance Framework | Copilot | 1.0 | July 2026 | [provenance-framework-v1.0.zip](./provenance-framework-v1.0.zip) |

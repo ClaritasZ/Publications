@@ -112,15 +112,16 @@ Methodical and substantiated, with a structure or model as the result.
 
 - [The Governance Chain](./papers/the-governance-chain.pdf) · Source → policy → principle → framework → guideline → measure. How decisions flow through an organisation.
 - [Explicit Grounds](./papers/explicit-grounds.pdf) · Architecture practice in complex, changing environments.
-- [Provenance Framework v1.0](./papers/provenance-framework-v1.0.zip) · A way of making architecture decisions traceable. Amendments capture what a document says; architecture decision records establish which observations are intentional decisions; documents are derived from both. ZIP with the complete documentation (`claritasz-complete-documentation.pdf`) and the database schema (`schema.pdf`). Free to use; support in Dutch or English at €200 per hour, excluding VAT.
 
 ## AI prompts
 
 Freeware prompts and scripts for AI assistants, readable as text and usable as a tool. Each prompt states what it does, what it does not do and which assistant it was written for.
 
+**Provenance Framework** makes architecture decisions traceable. Amendments capture what a document says; architecture decision records establish which observations are intentional decisions; documents are derived from both. The ZIP holds the complete documentation (`claritasz-complete-documentation.pdf`) and the database schema (`schema.pdf`). Free to use; support in Dutch or English at €200 per hour, excluding VAT.
+
 | Prompt | Assistant | Version | Date |
 |---|---|---|---|
-| to be added | Copilot | 1.0 | |
+| [Provenance Framework](./prompts/provenance-framework-v1.0.zip) | Copilot | 1.0 | July 2026 |
 
 **ClaritasZ**  
 Consistent in Design. Powered by Logic.
