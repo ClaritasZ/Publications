@@ -55,16 +55,16 @@ Colour supports recognition. The editorial system remains consistent across ever
 
 ### Nederlandse reports · editie 26-40
 
-- [De Enterprisearchitect](./de-enterprisearchitect/2026/De_Enterprisearchitect_26_40.pdf)
-- [De Businessarchitect](./de-businessarchitect/2026/De_Businessarchitect_26_40.pdf)
-- [De Dataarchitect](./de-dataarchitect/2026/De_Dataarchitect_26_40.pdf)
-- [De Integratiearchitect](./de-integratiearchitect/2026/De_Integratiearchitect_26_40.pdf)
-- [De Securityarchitect](./de-securityarchitect/2026/De_Securityarchitect_26_40.pdf)
-- [De Infrastructuurarchitect](./de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_26_40.pdf)
+- [De Enterprisearchitect](./sample/de-enterprisearchitect/2026/De_Enterprisearchitect_26_40.pdf)
+- [De Businessarchitect](./sample/de-businessarchitect/2026/De_Businessarchitect_26_40.pdf)
+- [De Dataarchitect](./sample/de-dataarchitect/2026/De_Dataarchitect_26_40.pdf)
+- [De Integratiearchitect](./sample/de-integratiearchitect/2026/De_Integratiearchitect_26_40.pdf)
+- [De Securityarchitect](./sample/de-securityarchitect/2026/De_Securityarchitect_26_40.pdf)
+- [De Infrastructuurarchitect](./sample/de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_26_40.pdf)
 
 ### European reports
 
-- [The Infrastructure Architect · European Edition 26-09](./the-infrastructure-architect/eu/2026/The_Infrastructure_Architect_26_09.pdf)
+- [The Infrastructure Architect · European Edition 26-09](./sample/the-infrastructure-architect/eu/2026/The_Infrastructure_Architect_26_09.pdf)
 
 ## Repository structure
 
