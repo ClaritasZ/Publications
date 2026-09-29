@@ -104,7 +104,7 @@ A reflection or argument, developing a single thought.
 
 | Essay | Version | Date |
 |---|---|---|
-| Ambiguity Is the Attack Surface | 1.0 | September 2026 |
+| [Ambiguity Is the Attack Surface](./essays/ClaritasZ_Ambiguity_Is_the_Attack_Surface_v1_0.pdf) | 1.0 | September 2026 |
 
 ## Papers
 
