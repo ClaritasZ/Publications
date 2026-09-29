@@ -76,7 +76,7 @@ TEXT = {
         "monthly": "Maandelijks", "issue": "Nummer", "earlier_issues": "Eerdere nummers",
         "review_title": "European Architecture Review", "review_when": "Laatste vrijdag van de maand",
         "review_lead": "Het meest ingrijpende Europese architectuurthema van de maand, vanuit alle zes perspectieven.",
-        "review_contents": "Editorial, één pagina per perspectief, synthese over de perspectieven heen en primaire bronnen.",
+        "review_contents": "Editorial, de zes perspectieven en de ontwikkelingen van de maand.",
         "review_none": "Het eerste nummer verschijnt eind oktober 2026.",
         "essay_ambiguity": "Een reflectie of betoog, dat één gedachte uitwerkt.",
         "paper_chain": "Bron, beleid, principe, kader, richtlijn, maatregel. Hoe besluiten door een organisatie stromen.",
@@ -97,7 +97,7 @@ TEXT = {
         "monthly": "Monthly", "issue": "Issue", "earlier_issues": "Earlier issues",
         "review_title": "European Architecture Review", "review_when": "Last Friday of the month",
         "review_lead": "The most consequential European architecture theme of the month, from all six perspectives.",
-        "review_contents": "Editorial, one page per perspective, a cross architecture synthesis and primary sources.",
+        "review_contents": "Editorial, the six perspectives and the developments of the month.",
         "review_none": "The first issue appears at the end of October 2026.",
         "essay_ambiguity": "A reflection or argument, developing a single thought.",
         "paper_chain": "Source, policy, principle, framework, guideline, measure. How decisions flow through an organisation.",
@@ -161,6 +161,39 @@ def read_report(url):
         if re.fullmatch(r"[1-9]", line) and i + 2 < len(lines) and " · " in lines[i + 2]:
             signals.append((lines[i + 1], lines[i + 2]))
     return (" ".join(observation) or None), signals
+
+
+@functools.lru_cache(maxsize=None)
+def read_review(url):
+    """Return (editorial title, [development titles]) from a review PDF, or (None, [])."""
+    if pypdf is None:
+        return None, []
+    try:
+        pages = [[l.strip() for l in p.extract_text().splitlines()] for p in pypdf.PdfReader(ROOT / url.lstrip("/")).pages]
+    except Exception:
+        return None, []
+    editorial, developments = None, []
+    for lines in pages:
+        if len(lines) < 5:
+            continue
+        title = []
+        for line in lines[4:]:
+            if not line or line[0].isdigit() or line.startswith("Editorial /") or line.isupper():
+                break
+            title.append(line)
+        title = " ".join(title)
+        if re.search(r"DEVELOPMENT\s*/", lines[1]) and title:
+            developments.append(title)
+        elif re.search(r"EDITORIAL\s*/\s*I$", lines[1]) and title:
+            editorial = title
+    return editorial, developments
+
+
+def bullets(items):
+    if not items:
+        return ""
+    lines = "\n".join(f"            <li>{e(item)}</li>" for item in items)
+    return f'          <ul class="signals">\n{lines}\n          </ul>'
 
 
 def label(edition):
@@ -285,9 +318,10 @@ def review_page(lang, issues):
         main = section(t["latest"], f'      <p class="note">{e(t["review_none"])}</p>')
     else:
         (latest, url), *earlier = issues.items()
+        editorial, developments = read_review(url)
         main = section(f'{t["issue"]} {month(lang, latest)}',
-                       tiles([tile(url, f'{t["review_title"]} · {month(lang, latest)}', t["review_contents"],
-                                   f"PDF · {label(latest)}", cls="tile tile--domain")]))
+                       tiles([tile(url, editorial or f'{t["review_title"]} · {month(lang, latest)}', t["review_contents"],
+                                   f"PDF · {label(latest)}", cls="tile tile--domain", extra=bullets(developments))]))
         if earlier:
             rows = [f'        <li><span class="edition">{label(issue)}</span> <a href="{e(url)}">{e(month(lang, issue))}</a></li>'
                     for issue, url in earlier]
@@ -318,8 +352,9 @@ def index_page(lang, all_editions, issues):
         reports.append(tile(f"/{lang}/reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], where,
                             cls="tile tile--domain", status=t["weekly"], extra=signal_list(editions)))
     where = f'{t["review_when"]} · {month(lang, next(iter(issues)))}' if issues else t["review_none"]
+    developments = read_review(next(iter(issues.values())))[1] if issues else []
     reports.append(tile(f"/{lang}/reports/review/", t["review_title"], t["review_lead"], where,
-                        cls="tile tile--domain", status=t["monthly"]))
+                        cls="tile tile--domain", status=t["monthly"], extra=bullets(developments)))
     main = "\n".join([
         section(t["reports"], tiles(reports), "reports"),
         section(t["essays"], tiles([tile("/essays/ClaritasZ_Ambiguity_Is_the_Attack_Surface_v1_0.pdf",
