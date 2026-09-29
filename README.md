@@ -53,10 +53,14 @@ Colour supports recognition. The editorial system remains consistent across ever
 
 ## Latest published editions
 
-### Nederlandse reports
+### Nederlandse reports · editie 26-40
 
-- [De Infrastructuurarchitect · editie 26-40](./de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_2026_09_28.pdf)
-- [De Securityarchitect · editie 26-40](./de-securityarchitect/2026/De_Securityarchitect_2026_09_28.pdf)
+- [De Enterprisearchitect](./de-enterprisearchitect/2026/De_Enterprisearchitect_26_40.pdf)
+- [De Businessarchitect](./de-businessarchitect/2026/De_Businessarchitect_26_40.pdf)
+- [De Dataarchitect](./de-dataarchitect/2026/De_Dataarchitect_26_40.pdf)
+- [De Integratiearchitect](./de-integratiearchitect/2026/De_Integratiearchitect_26_40.pdf)
+- [De Securityarchitect](./de-securityarchitect/2026/De_Securityarchitect_26_40.pdf)
+- [De Infrastructuurarchitect](./de-infrastructuurarchitect/2026/De_Infrastructuurarchitect_26_40.pdf)
 
 ### European reports
 
