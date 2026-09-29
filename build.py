@@ -6,6 +6,7 @@ push; nothing it writes (nl/, en/) is committed. Standard library only.
 Weekly reports are found by path and file name:
   reports/de-<architect>/YYYY/<Name>_YY_WW.pdf        Dutch weekly edition
   reports/the-<architect>/eu/YYYY/<Name>_YY_WW.pdf    European weekly edition
+  reports/european-architecture-review/YYYY/<Name>_YY_MM.pdf    monthly theme issue
 reports/sample/ is kept as published and not listed here.
 """
 
@@ -43,6 +44,15 @@ EDITIONS = {
     },
 }
 
+REVIEW_GLOB = "reports/european-architecture-review/[0-9][0-9][0-9][0-9]/*.pdf"
+
+MONTHS = {
+    "nl": ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus",
+           "september", "oktober", "november", "december"],
+    "en": ["January", "February", "March", "April", "May", "June", "July", "August",
+           "September", "October", "November", "December"],
+}
+
 TEXT = {
     "nl": {
         "locale": "nl_NL", "lang_label": "Taal",
@@ -54,6 +64,11 @@ TEXT = {
         "nl_lead": "Zes architectuurperspectieven op één gedeelde feitelijke grond, met de blik op Nederland.",
         "eu_title": "Europese weekeditie", "eu_when": "Elke donderdag",
         "eu_lead": "Dezelfde zes perspectieven vanuit een Europese context. Een eigen selectie, geen vertaling.",
+        "monthly": "Maandelijks", "issue": "Nummer", "earlier_issues": "Eerdere nummers",
+        "review_title": "European Architecture Review", "review_when": "Laatste vrijdag van de maand",
+        "review_lead": "Het meest ingrijpende Europese architectuurthema van de maand, vanuit alle zes perspectieven.",
+        "review_contents": "Editorial, één pagina per perspectief, synthese over de perspectieven heen en primaire bronnen.",
+        "review_none": "Het eerste nummer verschijnt eind oktober 2026.",
         "essay_ambiguity": "Een reflectie of betoog, dat één gedachte uitwerkt.",
         "paper_chain": "Bron, beleid, principe, kader, richtlijn, maatregel. Hoe besluiten door een organisatie stromen.",
         "paper_grounds": "Architectuurpraktijk in complexe, veranderende omgevingen.",
@@ -70,6 +85,11 @@ TEXT = {
         "nl_lead": "Six architecture perspectives on one shared factual ground, focused on the Netherlands.",
         "eu_title": "European weekly edition", "eu_when": "Every Thursday",
         "eu_lead": "The same six perspectives from a European context. A separate selection, not a translation.",
+        "monthly": "Monthly", "issue": "Issue", "earlier_issues": "Earlier issues",
+        "review_title": "European Architecture Review", "review_when": "Last Friday of the month",
+        "review_lead": "The most consequential European architecture theme of the month, from all six perspectives.",
+        "review_contents": "Editorial, one page per perspective, a cross architecture synthesis and primary sources.",
+        "review_none": "The first issue appears at the end of October 2026.",
         "essay_ambiguity": "A reflection or argument, developing a single thought.",
         "paper_chain": "Source, policy, principle, framework, guideline, measure. How decisions flow through an organisation.",
         "paper_grounds": "Architecture practice in complex, changing environments.",
@@ -93,6 +113,20 @@ def collect(kind):
         if perspective and match:
             found.setdefault(match.groups(), {})[perspective] = "/" + rel.as_posix()
     return dict(sorted(found.items(), reverse=True))
+
+
+def collect_review():
+    """Return {(yy, mm): url}, newest issue first."""
+    found = {}
+    for path in ROOT.glob(REVIEW_GLOB):
+        match = WEEK.search(path.name)
+        if match:
+            found[match.groups()] = "/" + path.relative_to(ROOT).as_posix()
+    return dict(sorted(found.items(), reverse=True))
+
+
+def month(lang, issue):
+    return f"{MONTHS[lang][int(issue[1]) - 1]} 20{issue[0]}"
 
 
 def label(edition):
@@ -209,7 +243,23 @@ def edition_page(lang, kind, editions):
     return page(lang, f"reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], main, back=f"/{lang}/")
 
 
-def index_page(lang, all_editions):
+def review_page(lang, issues):
+    t = TEXT[lang]
+    if not issues:
+        main = section(t["latest"], f'      <p class="note">{e(t["review_none"])}</p>')
+    else:
+        (latest, url), *earlier = issues.items()
+        main = section(f'{t["issue"]} {month(lang, latest)}',
+                       tiles([tile(url, f'{t["review_title"]} · {month(lang, latest)}', t["review_contents"],
+                                   f"PDF · {label(latest)}", cls="tile tile--domain")]))
+        if earlier:
+            rows = [f'        <li><span class="edition">{label(issue)}</span> <a href="{e(url)}">{e(month(lang, issue))}</a></li>'
+                    for issue, url in earlier]
+            main += "\n" + section(t["earlier_issues"], '      <ul class="editions">\n' + "\n".join(rows) + "\n      </ul>")
+    return page(lang, "reports/review/", t["review_title"], t["review_lead"], main, back=f"/{lang}/")
+
+
+def index_page(lang, all_editions, issues):
     t = TEXT[lang]
     reports = []
     for kind in ("nl", "eu"):
@@ -217,6 +267,9 @@ def index_page(lang, all_editions):
         where = f'{t[f"{kind}_when"]} · {t["edition"]} {label(next(iter(editions)))}' if editions else t["none"]
         reports.append(tile(f"/{lang}/reports/{kind}/", t[f"{kind}_title"], t[f"{kind}_lead"], where,
                             cls="tile tile--domain", status=t["weekly"]))
+    where = f'{t["review_when"]} · {month(lang, next(iter(issues)))}' if issues else t["review_none"]
+    reports.append(tile(f"/{lang}/reports/review/", t["review_title"], t["review_lead"], where,
+                        cls="tile tile--domain", status=t["monthly"]))
     main = "\n".join([
         section(t["reports"], tiles(reports), "reports"),
         section(t["essays"], tiles([tile("/essays/ClaritasZ_Ambiguity_Is_the_Attack_Surface_v1_0.pdf",
@@ -237,12 +290,15 @@ def write(rel, content):
 
 def main():
     all_editions = {kind: collect(kind) for kind in EDITIONS}
+    issues = collect_review()
     for lang in TEXT:
-        write(f"{lang}/index.html", index_page(lang, all_editions))
+        write(f"{lang}/index.html", index_page(lang, all_editions, issues))
+        write(f"{lang}/reports/review/index.html", review_page(lang, issues))
         for kind, editions in all_editions.items():
             write(f"{lang}/reports/{kind}/index.html", edition_page(lang, kind, editions))
     for kind, editions in all_editions.items():
         print(f"{kind}: {len(editions)} edition(s)" + (f", latest {label(next(iter(editions)))}" if editions else ""))
+    print(f"review: {len(issues)} issue(s)" + (f", latest {label(next(iter(issues)))}" if issues else ""))
 
 
 if __name__ == "__main__":
