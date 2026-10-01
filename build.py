@@ -141,7 +141,29 @@ def month(lang, issue):
 
 
 OBSERVATION = re.compile(r"^(CENTRALE OBSERVATIE|CENTRAL OBSERVATION)$")
-SELECTION = re.compile(r"^(WEEKSELECTIE|WEEKLY SELECTION|SELECTION)$")
+SELECTION = re.compile(r"^(WEEKSELECTIE|WEEKLY SELECTION|MONTH SELECTION|SELECTION)\b")
+LABELS = {"FEIT", "FACT", "IMPACT", "SPANNING", "TENSION", "BESLUIT", "DECISION", "ADVICE", "BRON", "SOURCE", "NORM"}
+FIRST_LABEL = {"FEIT", "FACT"}
+
+
+def sentence_case(title, body):
+    """'DIGITAL EURO TESTS NEW DATA FLOWS' -> 'Digital euro tests new data flows'.
+
+    A word keeps its capitals only when the report itself writes it that way
+    in running text (EU, ECB, API), so nothing is guessed.
+    """
+    words = title.split()
+    out = []
+    for i, word in enumerate(words):
+        core = word.strip(",.:;()")
+        if len(core) > 1 and re.search(rf"\b{re.escape(core)}\b", body):
+            out.append(word)
+        elif core.endswith("S") and len(core) > 2 and re.search(rf"\b{re.escape(core[:-1])}s\b", body):
+            out.append(word.replace(core, core[:-1] + "s"))  # APIS -> APIs
+        else:
+            lower = word.lower()
+            out.append(lower[:1].upper() + lower[1:] if i == 0 else lower)
+    return " ".join(out)
 
 
 @functools.lru_cache(maxsize=None)
@@ -153,16 +175,27 @@ def read_report(url):
         lines = [l.strip() for l in pypdf.PdfReader(ROOT / url.lstrip("/")).pages[0].extract_text().splitlines()]
     except Exception:
         return None, []
+    body = " ".join(l for l in lines if not l.isupper())
+    numbered = any(re.fullmatch(r"[1-9]", l) for l in lines)
     observation, signals = [], []
     for i, line in enumerate(lines):
-        if OBSERVATION.match(line):
+        if OBSERVATION.match(line) and not observation:
             for nxt in lines[i + 1:]:
-                if SELECTION.match(nxt):
+                if SELECTION.match(nxt) or nxt.isupper():
                     break
                 observation.append(nxt)
+        # Dutch layout: a number, the title, then "source · date".
         if re.fullmatch(r"[1-9]", line) and i + 2 < len(lines) and " · " in lines[i + 2]:
             signals.append((lines[i + 1], lines[i + 2]))
-    return (" ".join(observation) or None), signals
+        # European layout: the title in capitals, directly followed by the FACT label.
+        elif (not numbered and line.isupper() and " · " not in line
+              and line not in LABELS and not SELECTION.match(line)
+              and i + 1 < len(lines) and lines[i + 1] in FIRST_LABEL):
+            signals.append((sentence_case(line, body), ""))
+    text = " ".join(observation)
+    if len(text) > 400:  # a layout this script does not know: show nothing rather than a page
+        text = ""
+    return (text or None), signals
 
 
 @functools.lru_cache(maxsize=None)
