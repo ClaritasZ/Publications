@@ -142,6 +142,7 @@ Methodical and substantiated, with a structure or model as the result.
 
 - [The Governance Chain](./papers/the-governance-chain.pdf) · Source → policy → principle → framework → guideline → measure. How decisions flow through an organisation.
 - [Explicit Grounds](./papers/explicit-grounds.pdf) · Architecture practice in complex, changing environments.
+- [A Grammar of Work](./papers/the-grammar-of-work.pdf) · A seven object grammar for describing services through explicit relations, owners and agreements.
 
 ## AI prompts
 
