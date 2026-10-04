@@ -79,6 +79,7 @@ TEXT = {
         "review_contents": "Editorial, de zes perspectieven en de ontwikkelingen van de maand.",
         "review_none": "Het eerste nummer verschijnt eind oktober 2026.",
         "essay_ambiguity": "Een reflectie of betoog, dat één gedachte uitwerkt.",
+        "essay_any": "Waarom goed testontwerp bepaalt wat agentic AI-tests aantonen en welke risico’s ze scheppen.",
         "paper_chain": "Bron, beleid, principe, kader, richtlijn, maatregel. Hoe besluiten door een organisatie stromen.",
         "paper_grounds": "Architectuurpraktijk in complexe, veranderende omgevingen.",
         "paper_grammar": "Een model met zeven objecten voor het beschrijven van diensten via expliciete relaties, eigenaren en afspraken.",
@@ -101,6 +102,7 @@ TEXT = {
         "review_contents": "Editorial, the six perspectives and the developments of the month.",
         "review_none": "The first issue appears at the end of October 2026.",
         "essay_ambiguity": "A reflection or argument, developing a single thought.",
+        "essay_any": "Why test design determines what agentic AI testing can show—and what risks it creates.",
         "paper_chain": "Source, policy, principle, framework, guideline, measure. How decisions flow through an organisation.",
         "paper_grounds": "Architecture practice in complex, changing environments.",
         "paper_grammar": "A seven object grammar for describing services through explicit relations, owners and agreements.",
@@ -392,7 +394,9 @@ def index_page(lang, all_editions, issues):
                         cls="tile tile--domain", status=t["monthly"], extra=bullets(developments)))
     main = "\n".join([
         section(t["reports"], tiles(reports), "reports"),
-        section(t["essays"], tiles([tile("/essays/ClaritasZ_Ambiguity_Is_the_Attack_Surface_v1_0.pdf",
+        section(t["essays"], tiles([tile("/essays/ClaritasZ_Any_Direction_Will_Do_v1_0.pdf",
+                                         "Any Direction Will Do", t["essay_any"], "PDF · 1.0"),
+                                    tile("/essays/ClaritasZ_Ambiguity_Is_the_Attack_Surface_v1_0.pdf",
                                          "Ambiguity Is the Attack Surface", t["essay_ambiguity"], "PDF · 1.0")]), "essays"),
         section(t["papers"], tiles([tile("/papers/the-governance-chain.pdf", "The Governance Chain", t["paper_chain"], "PDF"),
                                     tile("/papers/explicit-grounds.pdf", "Explicit Grounds", t["paper_grounds"], "PDF"),
