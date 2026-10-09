@@ -130,6 +130,8 @@ Only material developments from authoritative primary sources are selected. The 
 
 #### Independent source scans
 
+The binding editorial rule is maintained in [`reports/EDITORIAL_GROUND.md`](./reports/EDITORIAL_GROUND.md).
+
 Every edition begins with a fully independent source scan within its own geographic scope and reporting period. A previous Dutch, European, international, weekly or monthly edition is never used as a source list, shortlist or search seed for another edition.
 
 The date of a previous edition may be used only to establish the reporting window. Earlier selections are consulted only after a provisional candidate set has been formed, and solely to identify repetition or a demonstrable change in status, normative effect, risk or decision impact.
