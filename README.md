@@ -128,6 +128,18 @@ One shared factual ground is interpreted from multiple architecture responsibili
 
 Only material developments from authoritative primary sources are selected. The reports are organisation independent and written for readers who need a clear view without a product inventory or solution design.
 
+#### Independent source scans
+
+Every edition begins with a fully independent source scan within its own geographic scope and reporting period. A previous Dutch, European, international, weekly or monthly edition is never used as a source list, shortlist or search seed for another edition.
+
+The date of a previous edition may be used only to establish the reporting window. Earlier selections are consulted only after a provisional candidate set has been formed, and solely to identify repetition or a demonstrable change in status, normative effect, risk or decision impact.
+
+Overlap is permitted only when a development independently crosses the materiality threshold in each scan. The reason for selection and the distinct geographic decision impact must then be explicit. Difference is not forced; independence of observation is required.
+
+The Dutch edition scans for material Dutch impact. The European edition performs a separate European scan. Any international edition must perform a separate worldwide scan across multiple regions. The monthly review reassesses the full month independently and is not assembled from weekly selections.
+
+Within one edition, the six architecture perspectives share the same confirmed factual ground. Their interpretation, tensions and decision relevance remain specific to each architecture responsibility.
+
 ## Essays
 
 A reflection or argument, developing a single thought.
